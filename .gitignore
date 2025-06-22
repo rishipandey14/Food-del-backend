@@ -1,0 +1,46 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+*.pdb
+
+# Environment
+.env
+*.env
+venv/
+ENV/
+env/
+*.sqlite3
+
+# Django
+db.sqlite3
+*.log
+*.pot
+*.pyc
+local_settings.py
+instance/
+.DS_Store
+
+# Media / Static (generated or user-uploaded content)
+media/
+staticfiles/
+static_root/
+static_cdn/
+node_modules/
+
+# VSCode and IDE config
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# OS
+Thumbs.db
+Desktop.ini
+
+# Migrations (optional, if you don’t want to track initial migrations)
+# Uncomment if you don’t want auto-generated migration files
+# */migrations/
+# !*/migrations/__init__.py
