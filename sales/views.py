@@ -1,78 +1,79 @@
 from rest_framework.views import APIView
+from .models import Sale
+from .serializers import SaleSerializer
 from rest_framework.response import Response
 from rest_framework import status
-from .models import Restaurant
-from .serializers import RestaurantSerializer
-
 
 # Create your views here.
 
 
-class RestaurantList(APIView):
+class SaleList(APIView):
     def get(self, request):
-        ratings = Restaurant.objects.all()
-        serializer = RestaurantSerializer(ratings, many=True)
+        restaurant_id = request.query_params.get('restaurant', None)
+        if restaurant_id:
+            sales = Sale.objects.filter(restaurant__id = restaurant_id)
+        else :
+            sales = Sale.objects.all()
+            
+        serializer = SaleSerializer(sales, many=True)
         return Response(serializer.data)
     
     def post(self, request):
-        serializer = RestaurantSerializer(data=request.data)
+        serializer = SaleSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response({
-                "message": "Restaurant registered successfully",
+                "message": "Sale Record Created successfully",
                 "data": serializer.data
             }, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class RestaurantDetail(APIView):
+class SaleDetail(APIView):
     def get(self, request, pk):
         try:
-            restaurant = Restaurant.objects.get(pk=pk)
-        except Restaurant.DoesNotExist:
+            sale = Sale.objects.get(pk=pk)
+        except Sale.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
-        serializer = RestaurantSerializer(restaurant)
+        serializer = SaleSerializer(sale)
         return Response(serializer.data)
     
     def put(self, request, pk):
         try:
-            restaurant = Restaurant.objects.get(pk=pk)
-        except Restaurant.DoesNotExist:
+            sale = Sale.objects.get(pk=pk)
+        except Sale.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
-        serializer = RestaurantSerializer(restaurant, data=request.data)
+        
+        serializer = SaleSerializer(sale, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response({
-                "message" : "Restaurant updated successfully", 
+                "message" : "Sale updated successfully",
                 "data" : serializer.data
             })
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
     def patch(self, request, pk):
         try:
-            restaurant = Restaurant.objects.get(pk=pk)
-        except Restaurant.DoesNotExist:
+            sale = Sale.objects.get(pk=pk)
+        except Sale.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
-        serializer = RestaurantSerializer(restaurant, data=request.data, partial=True)
+        
+        serializer = SaleSerializer(sale, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
             return Response({
-                "message" : "Restaurant updated successfully", 
+                "message" : "Sale updated successfully", 
                 "data" : serializer.data
             })
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
     def delete(self, request, pk):
         try:
-            restaurant = Restaurant.objects.get(pk=pk)
-        except Restaurant.DoesNotExist:
+            sale = Sale.objects.get(pk=pk)
+        except Sale.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
-        restaurant.delete()
+        sale.delete()
         return Response({
             "message" : "Deleted Successfully"
         },status=status.HTTP_204_NO_CONTENT)
-
-
-
-
-
