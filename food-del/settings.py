@@ -42,6 +42,11 @@ INSTALLED_APPS = [
     'rest_framework',
     'silk',
     'django_seed',
+    'delivery',
+    'menu',
+    'orders',
+    'reviews',
+    'sales',
 ]
 
 MIDDLEWARE = [
