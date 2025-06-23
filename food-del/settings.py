@@ -40,9 +40,12 @@ INSTALLED_APPS = [
     
     "base.apps.BaseConfig",
     'rest_framework',
+    'silk',
+    'django_seed',
 ]
 
 MIDDLEWARE = [
+    'silk.middleware.SilkyMiddleware',
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",

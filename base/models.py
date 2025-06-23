@@ -29,6 +29,11 @@ class Restaurant(models.Model):
     ]
 
 
+class Staff(models.Model):
+  name = models.CharField(max_length=200)
+  restaurants = models.ManyToManyField(Restaurant)
+
+
 
 
 class Rating(models.Model):
